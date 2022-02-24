@@ -5,16 +5,21 @@ import requests
 
 def pcap_processing():
 
-    pcap = rdpcap('fuzz-2006-06-26-2594.pcap')
+
     ips = set((p[IP].src) for p in PcapReader('fuzz-2006-06-26-2594.pcap') if IP in p)
-    for i in ips:
-        print(i)
+    return ips
 
 def geolocation_api_request():
-    r = requests.get('http://ip-api.com/csv/94.3.90.21?fields=status,country,countryCode,region,regionName,city,zip,lat,lon,isp,org,as,query')
-    print(r.text)
+    IPADDR = pcap_processing()
+    #print(IPADDR)
+    for current_ip in IPADDR:
+        print(current_ip)
+        r = requests.get('http://pro.ip-api.com/csv/{}?key=0OjtyiZRQbFHXYW'.format(current_ip))
 
-    for i in range(len(r.text)):
+        print(r.text)
+
+
+
         
 
 
