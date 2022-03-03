@@ -2,7 +2,14 @@
 
 from scapy.all import *
 import requests
+import IP2Location
+import os
 
+### Global Vars
+database = IP2Location.IP2Location(os.path.join("data", "/home/george/Documents/Dissertation/IP2LOCATION-LITE-DB11.IPV6.BIN/IP2LOCATION-LITE-DB11.IPV6.BIN"))
+geolocationips = {}
+
+###
 def pcap_processing():
 
 
@@ -18,11 +25,19 @@ def geolocation_api_request():
 
         print(r.text)
 
+def ip2location():
+    IPADDR = pcap_processing()
 
+    for current_ip in IPADDR:
+        rec = database.get_all(current_ip)
+        current = geolocationips.get(current_ip,{'country': rec.country_short, 'region': rec.region, 'city': rec.city, 'latitude': rec.latitude, 'longitude': rec.longitude})
+        geolocationips[current_ip] = current
 
-        
+    print(geolocationips)
+
 
 
 #pcap_processing()
 
-geolocation_api_request()
+#geolocation_api_request()
+ip2location()
