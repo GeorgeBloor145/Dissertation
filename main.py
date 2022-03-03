@@ -27,14 +27,25 @@ def geolocation_api_request():
 
 def ip2location():
     IPADDR = pcap_processing()
+    failed = 0
 
     for current_ip in IPADDR:
-        rec = database.get_all(current_ip)
-        current = geolocationips.get(current_ip,{'country': rec.country_short, 'region': rec.region, 'city': rec.city, 'latitude': rec.latitude, 'longitude': rec.longitude})
-        geolocationips[current_ip] = current
+        number = current_ip[0] + current_ip[1] + current_ip[2] + current_ip[3] + current_ip[4] + current_ip[5] + current_ip[6]
 
+
+        if number == "192.168":
+            print("THE IP ADDRESS {} is in a private range, lookup FAILED".format(current_ip))
+            failed = failed + 1
+
+
+        else:
+            rec = database.get_all(current_ip)
+            current = geolocationips.get(current_ip,{'country': rec.country_short, 'region': rec.region, 'city': rec.city, 'latitude': rec.latitude, 'longitude': rec.longitude})
+            geolocationips[current_ip] = current
+    print("")
     print(geolocationips)
-
+    print("")
+    print("The number of failed lookups were: {}".format(failed))
 
 
 #pcap_processing()
