@@ -4,7 +4,9 @@ from scapy.all import *
 import requests
 import IP2Location
 import os
-
+from ipwhois import IPWhois
+import json
+import logging
 ### Global Vars
 database = IP2Location.IP2Location(os.path.join("data", "/home/george/Documents/Dissertation/IP2LOCATION-LITE-DB11.IPV6.BIN/IP2LOCATION-LITE-DB11.IPV6.BIN"))
 geolocationips = {}
@@ -47,8 +49,30 @@ def ip2location():
     print("")
     print("The number of failed lookups were: {}".format(failed))
 
+def whois():
+
+    ip = pcap_processing()
+    for current_ip in ip:
+        try:
+            obj = IPWhois(current_ip)
+
+            res = obj.lookup_rdap()
+
+            print(res['asn_country_code'])
+        except:
+            print("ERROR LOOKING UP IP: {} LIKELY A PRIVATE ADDRESS".format(current_ip))
+            continue
+
+        # except Exception as e:
+        #     print(str(e))
+        #     logging.warning("WHOIS LOOKUP FAILED: " + str(e))
+        #
+        #     return {'query': current_ip, "error": 'Error: WHOIS Lookup Failed'}
+        #     continue
 
 #pcap_processing()
 
 #geolocation_api_request()
-ip2location()
+#ip2location()
+
+whois()
