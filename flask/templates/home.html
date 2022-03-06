@@ -2,6 +2,10 @@
 {% block content %}
 <h2>Home</h2>
 <h3>Press go to start processing</h3>
-<button type="button" class="btn btn-primary">Primary</button>
+<form action="/results">
+    <input type ="submit" name="GO" value="GO" />
+</form>
+<h3>You will be redirected to the results page once the processing has been completed</h3>
+
 
 {% endblock %}

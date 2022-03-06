@@ -15,7 +15,7 @@ geolocationips = {}
 def pcap_processing():
 
 
-    ips = set((p[IP].src) for p in PcapReader('fuzz-2006-06-26-2594.pcap') if IP in p)
+    ips = set((p[IP].src) for p in PcapReader('/home/george/Documents/Dissertation/fuzz-2006-06-26-2594.pcap') if IP in p)
     return ips
 
 def geolocation_api_request():
@@ -42,12 +42,16 @@ def ip2location():
 
         else:
             rec = database.get_all(current_ip)
-            current = geolocationips.get(current_ip,{'country': rec.country_short, 'region': rec.region, 'city': rec.city, 'latitude': rec.latitude, 'longitude': rec.longitude})
+            current = geolocationips.get(current_ip,{'country_long': rec.country_long, 'country_short': rec.country_short, 'region': rec.region, 'city': rec.city, 'latitude': rec.latitude, 'longitude': rec.longitude})
             geolocationips[current_ip] = current
+
     print("")
     print(geolocationips)
     print("")
     print("The number of failed lookups were: {}".format(failed))
+    return geolocationips
+
+
 
 def whois():
 
@@ -75,4 +79,4 @@ def whois():
 #geolocation_api_request()
 #ip2location()
 
-whois()
+#whois()
