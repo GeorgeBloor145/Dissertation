@@ -11,7 +11,7 @@
       <th>City</th>
       <th>Latitude</th>
       <th>Longitude</th>
-
+      <th>WHOIS Location SHORT</th>
     </tr>
   </thead>
   <tbody>
@@ -23,12 +23,13 @@
        <td> {{ value['city'] }} </td>
        <td> {{ value['latitude'] }} </td>
        <td> {{ value['longitude'] }} </td>
+       <td> {{ value['whois'] }}</td>
    </tr>
   {% endfor %}
   </tbody>
 </table>
 <p>
-    {{ failed }}
+    The number of lookups FAILED: {{ failed }}
 </p>
 
 {% endblock %}

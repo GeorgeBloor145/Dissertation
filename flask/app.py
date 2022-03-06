@@ -12,14 +12,14 @@ def welcome():
 def home():
 
     return  render_template("home.html")
-    if request.method == "POST":
-        print("TEST")
+    # if request.method == "POST":
+    #     print("TEST")
 
 @app.route('/results')
 def run_script():
-    processing = ip2location()
-    print(processing)
-    return render_template("results.html", result= processing)
+    geolookup, failed = ip2location()
+    print(geolookup)
+    return render_template("results.html", result= geolookup, failed = failed)
 
 if __name__ == "__main__":
     app.run(debug =True)

@@ -7,10 +7,13 @@ import os
 from ipwhois import IPWhois
 import json
 import logging
+import country_converter as coco
+
+
 ### Global Vars
 database = IP2Location.IP2Location(os.path.join("data", "/home/george/Documents/Dissertation/IP2LOCATION-LITE-DB11.IPV6.BIN/IP2LOCATION-LITE-DB11.IPV6.BIN"))
 geolocationips = {}
-
+cc = coco.country_converter
 ###
 def pcap_processing():
 
@@ -41,31 +44,34 @@ def ip2location():
 
 
         else:
+            whoislookup = whois(current_ip)
+            print(whoislookup)
             rec = database.get_all(current_ip)
-            current = geolocationips.get(current_ip,{'country_long': rec.country_long, 'country_short': rec.country_short, 'region': rec.region, 'city': rec.city, 'latitude': rec.latitude, 'longitude': rec.longitude})
+            current = geolocationips.get(current_ip,{'country_long': rec.country_long, 'country_short': rec.country_short, 'region': rec.region, 'city': rec.city, 'latitude': rec.latitude, 'longitude': rec.longitude, 'whois': whoislookup})
             geolocationips[current_ip] = current
 
-    print("")
+    #print("")
     print(geolocationips)
-    print("")
+    #print("")
     print("The number of failed lookups were: {}".format(failed))
-    return geolocationips
+    return geolocationips, failed
 
 
 
-def whois():
+def whois(passed_ip):
+    #print("BRRRRRR {}".format(passed_ip))
 
-    ip = pcap_processing()
-    for current_ip in ip:
-        try:
-            obj = IPWhois(current_ip)
 
-            res = obj.lookup_rdap()
+    try:
+        obj = IPWhois(passed_ip)
 
-            print(res['asn_country_code'])
-        except:
-            print("ERROR LOOKING UP IP: {} LIKELY A PRIVATE ADDRESS".format(current_ip))
-            continue
+        res = obj.lookup_rdap()
+        print(res)
+       # print(res['asn_country_code'])
+        return res['asn_country_code']
+    except:
+        print("ERROR LOOKING UP IP: {} LIKELY A PRIVATE ADDRESS".format(passed_ip))
+
 
         # except Exception as e:
         #     print(str(e))
