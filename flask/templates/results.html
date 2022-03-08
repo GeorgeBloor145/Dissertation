@@ -5,13 +5,15 @@
   <thead>
     <tr>
       <th>IP</th>
-
       <th>Country</th>
       <th>Region</th>
       <th>City</th>
       <th>Latitude</th>
       <th>Longitude</th>
       <th>WHOIS Location SHORT</th>
+      <th>Country SHORT</th>
+      <th>MATCH</th>
+
     </tr>
   </thead>
   <tbody>
@@ -24,6 +26,8 @@
        <td> {{ value['latitude'] }} </td>
        <td> {{ value['longitude'] }} </td>
        <td> {{ value['whois'] }}</td>
+       <td> {{ value['country_short'] }}</td>
+       <td> {{ value['match'] }} </td>
    </tr>
   {% endfor %}
   </tbody>
