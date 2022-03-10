@@ -44,16 +44,21 @@ def ip2location():
 
 
         else:
-            match = False
+            match = ""
             whoislookup = whois(current_ip)
             print(whoislookup)
             rec = database.get_all(current_ip)
-            current = geolocationips.get(current_ip,{'country_long': rec.country_long, 'country_short': rec.country_short, 'region': rec.region, 'city': rec.city, 'latitude': rec.latitude, 'longitude': rec.longitude, 'whois': whoislookup, 'match': []})
-            if current['whois'] == current['country_short']:
-                print("MATCH")
-                current['match'].append("true")
+            if whoislookup == rec.country_short:
+                print("MATCH 1")
+                match = "True"
             else:
-                current['match'].append("false")
+                match = "False"
+            current = geolocationips.get(current_ip,{'country_long': rec.country_long, 'country_short': rec.country_short, 'region': rec.region, 'city': rec.city, 'latitude': rec.latitude, 'longitude': rec.longitude, 'whois': whoislookup, 'match': match})
+            # if current['whois'] == current['country_short']:
+            #             #     print("MATCH")
+            #             #     current['match'].append("true")
+            #             # else:
+            #             #     current['match'].append("false")
 
             geolocationips[current_ip] = current
 
