@@ -17,9 +17,9 @@ def home():
 
 @app.route('/results')
 def run_script():
-    geolookup, failed = ip2location()
+    geolookup, failed, numberoflocations = ip2location()
     print(geolookup)
-    return render_template("results.html", result= geolookup, failed = failed)
+    return render_template("results.html", result= geolookup, failed = failed, numberoflocations=numberoflocations)
 
 @app.route('/help')
 def help():

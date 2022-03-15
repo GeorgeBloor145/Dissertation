@@ -8,12 +8,15 @@ from ipwhois import IPWhois
 import json
 import logging
 import country_converter as coco
-
+from collections import Counter
 
 ### Global Vars
 database = IP2Location.IP2Location(os.path.join("data", "/home/george/Documents/Dissertation/IP2LOCATION-LITE-DB11.IPV6.BIN/IP2LOCATION-LITE-DB11.IPV6.BIN"))
 geolocationips = {}
 cc = coco.country_converter
+
+numoflocations = []
+
 ###
 def pcap_processing():
 
@@ -54,21 +57,47 @@ def ip2location():
             else:
                 match = "False"
             current = geolocationips.get(current_ip,{'country_long': rec.country_long, 'country_short': rec.country_short, 'region': rec.region, 'city': rec.city, 'latitude': rec.latitude, 'longitude': rec.longitude, 'whois': whoislookup, 'match': match})
-            # if current['whois'] == current['country_short']:
-            #             #     print("MATCH")
-            #             #     current['match'].append("true")
-            #             # else:
-            #             #     current['match'].append("false")
 
             geolocationips[current_ip] = current
 
+            numoflocations.append(current['country_long'])
+
+
+
+
+
+            # #print("current country {}".format(current['country_short']))
+            # if current['country_long'] not in numberoflocations.keys():
+            #     #number = 0
+            #     locations = numberoflocations.get(current['country_long'], {"1"})
+            #
+            #     numberoflocations[current['country_long']] = locations
+            #     #print(numberoflocations)
+            #     #print("aaaaa {}".format(locations))
+            # elif current['country_long'] in numberoflocations.keys():
+            #     print("AAAAA {}".format(numberoflocations))
+            #     print("AHAHAHA {}".format(current['country_long']))
+            #     numberoflocations[current['country_long']].update("hello")
+
+
+
+
+
+
+            # elif current['country_long'] in numberoflocations.keys():
+            #     #numberoflocations[current['country_long']]['number'] =+ 1
+            #     numberoflocations[current['country_long']['number']].update(2)
+            #     #print(num)
 
 
     #print("")
     print(geolocationips)
     #print("")
     print("The number of failed lookups were: {}".format(failed))
-    return geolocationips, failed
+
+    numberoflocations = Counter(numoflocations)
+    print(numberoflocations)
+    return geolocationips, failed, numberoflocations
 
 
 
