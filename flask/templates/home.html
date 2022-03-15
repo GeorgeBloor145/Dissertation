@@ -1,12 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Home</h2>
-<h3>Press go to start processing</h3>
-<form action="/results">
-    <input type ="submit" name="GO" value="GO" />
-</form>
-<h5>You will be redirected to the results page once the processing has been completed</h5>
-<h5>This may take a number of minutes, depending on file size</h5>
+<center>
+    <h2>Home</h2>
+    <br>
+
+    <h5>You will be redirected to the results page once the processing has been completed</h5>
+    <h5>This may take a number of minutes, depending on file size</h5>
+    <br>
+        <h5>Press go to start processing</h5>
+
+    <form action="/results">
+        <input type ="submit" name="GO" value="GO" />
+    </form>
+    <br>
+    <h6>For help click <a href = "/help">here</a></h6>
+
+
+</center>
+
 
 
 {% endblock %}

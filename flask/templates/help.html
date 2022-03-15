@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    #my-text {
+    float: left;
+    margin-left: 10px;
+}
+</style>
+
+<center>
+    <h2>Help</h2>
+    <h6>This program is designed to geo-locate IP addresses from PCAP files</h6>
+<br>
+</center>
+    <h7 style="float: left; margin-left: 20px">To use:</h7>
+<br>
+<br>
+    <ul>
+        <li><h6>Ensure your pcap file is in the correct directory and named pcapfile.pcap</h6></li>
+        <li><h6>Ensure your pcap file is in the correct directory and named pcapfile.pcap</h6></li>
+        <li><h6>Ensure your IP2Location database is upto date and in the correct directory</h6></li>
+        <li><h6>Ensure you have a stable internet connection as without this the WHOIS lookups will fail</h6></li>
+        <li><h6>Depending on file size and internet speeds, processing may take a number of minutes. Please be patient</h6></li>
+
+    </ul>
+<br>
+<h4 style="float: left; margin-left: 25px"><a href="/home">Back</a></h4>
+
+{% endblock %}
