@@ -19,6 +19,7 @@ tr:nth-child(even) {
 }
 </style>
 <h2>Results</h2>
+
 <table>
   <thead>
     <tr>
@@ -53,6 +54,26 @@ tr:nth-child(even) {
 <p>
     The number of lookups FAILED: {{ failed }}
 </p>
+<table>
+    <thead>
+    <tr>
+        <th>Country</th>
+        <th>Times Appeared</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for key, value in numberoflocations.items() %}
+    <tr>
+        <td>
+            {{key}}
+        </td>
+        <td>
+            {{value}}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 
 
 </head>
